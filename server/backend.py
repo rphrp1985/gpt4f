@@ -41,13 +41,22 @@ class Backend_Api:
                 messages = build_messages(jailbreak)
 
                 # Generate response
+
+                print(request.json)
+
+                print()
+                print()
+                print(messages)
+                print()
+                print()
                 response = ChatCompletion.create(
                     model=model,
                     stream=True,
-                    chatId=conversation_id,
+                    # chatId=conversation_id,
                     messages=messages
                 )
-
+                # print(response.content)
+                # return "m"
                 return Response(stream_with_context(generate_stream(response, jailbreak)), mimetype='text/event-stream')
 
             except Exception as e:
@@ -61,7 +70,7 @@ class Backend_Api:
                         'success': False,
                         "error": f"an error occurred {str(e)}"
                     }, 400
-                time.sleep(3)  # Wait 3 second before trying again
+                time.sleep(1)  # Wait 3 second before trying again
 
 
 def build_messages(jailbreak):
@@ -76,16 +85,11 @@ def build_messages(jailbreak):
     prompt = request.json['meta']['content']['parts'][0]
 
     # Generate system message
-    current_date = datetime.now().strftime("%Y-%m-%d")
-    system_message = (
-        f'You are ChatGPT also known as ChatGPT, a large language model trained by OpenAI. '
-        f'Strictly follow the users instructions. '
-        f'Knowledge cutoff: 2021-09-01 Current date: {current_date}. '
-        f'{set_response_language(prompt)}'
-    )
+    # current_date = datetime.now().strftime("%Y-%m-%d")
+    
 
     # Initialize the conversation with the system message
-    conversation = [{'role': 'system', 'content': system_message}]
+    conversation = []
 
     # Add the existing conversation
     conversation += _conversation
@@ -102,7 +106,7 @@ def build_messages(jailbreak):
     conversation += [prompt]
 
     # Reduce conversation size to avoid API Token quantity error
-    conversation = conversation[-4:] if len(conversation) > 3 else conversation
+    # conversation = conversation[-4:] if len(conversation) > 3 else conversation
 
     return conversation
 
