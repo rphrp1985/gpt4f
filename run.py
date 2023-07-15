@@ -34,6 +34,6 @@ if __name__ == '__main__':
     app.register_blueprint(bp, url_prefix=url_prefix)
 
     # Run the Flask server
-    print(f"Running on {site_config['port']}{url_prefix}")
-    app.run(**site_config)
-    print(f"Closing port {site_config['port']}")
+    # print(f"Running on {site_config['port']}{url_prefix}")
+    # app.run(**site_config)
+    # print(f"Closing port {site_config['port']}")
