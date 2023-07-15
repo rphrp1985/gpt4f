@@ -14,7 +14,7 @@ def _create_completion(model: str, messages: list, stream: bool, temperature: fl
     }
     data = {
         'model':model,
-        'temperature': 0.7,
+        'temperature': temperature,
         'presence_penalty': 0,
         'messages': messages,
     }
