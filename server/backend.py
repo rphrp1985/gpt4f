@@ -42,18 +42,19 @@ class Backend_Api:
 
                 # Generate response
 
-                # print(request.json)
+                print(request.json)
 
-                # print()
-                # print()
-                # print(messages)
-                # print()
-                # print()
+                print()
+                print()
+                print(messages)
+                print()
+                print()
                 response = ChatCompletion.create(
                     model=model,
                     stream=True,
                     # chatId=conversation_id,
-                    messages=messages
+                    messages=messages,
+                    timeout=22
                 )
                 # print(response.content)
                 # return "m"
@@ -176,18 +177,6 @@ def response_jailbroken_failed(response):
     return False if len(response) < 4 else not (response.startswith("GPT:") or response.startswith("ACT:"))
 
 
-def set_response_language(prompt):
-    """  
-    Set the response language based on the prompt content.  
-
-    :param prompt: Prompt dictionary  
-    :return: String indicating the language to be used for the response  
-    """
-    translator = Translator()
-    max_chars = 256
-    content_sample = prompt['content'][:max_chars]
-    detected_language = translator.detect(content_sample).lang
-    return f"You will respond in the language: {detected_language}. "
 
 
 def getJailbreak(jailbreak):
