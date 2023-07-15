@@ -42,13 +42,13 @@ class Backend_Api:
 
                 # Generate response
 
-                print(request.json)
+                # print(request.json)
 
-                print()
-                print()
-                print(messages)
-                print()
-                print()
+                # print()
+                # print()
+                # print(messages)
+                # print()
+                # print()
                 response = ChatCompletion.create(
                     model=model,
                     stream=True,
